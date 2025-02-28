@@ -26,11 +26,6 @@ public class CarService implements CarUseCase {
     }
 
     @Override
-    public List<Car> getAllRentedCars() {
-        return carPort.getAllRentedCars();
-    }
-
-    @Override
     public Long getTotalKilometersDriven(Long carId) {
         return carPort.getTotalKilometersDriven(carId);
     }

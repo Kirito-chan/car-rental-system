@@ -11,8 +11,6 @@ public interface CarUseCase {
 
     List<Car> getAllCars();
 
-    List<Car> getAllRentedCars();
-
     Long getTotalKilometersDriven(Long carId);
 
     Car createCar(Car car);

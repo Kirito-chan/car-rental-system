@@ -34,29 +34,16 @@ public class CarPersistenceAdapter implements CarPort {
     }
 
     @Override
-    public List<Car> getAllRentedCars() {
-        return carRepository.findAll().stream().map(carMapper::mapToDomainEntity).toList();
-    }
-
-    @Override
     public Long getTotalKilometersDriven(Long carId) {
-        return getCar(carId).totalKilometersDriven();
-    }
-
-    @Override
-    public Car updateTotalKilometersDriven(Long carId, Long kilometersDriven) {
-        var carJpaEntity = carRepository.findById(carId).orElseThrow(EntityNotFoundException::new);
-        carJpaEntity.setTotalKilometersDriven(carJpaEntity.getTotalKilometersDriven() + kilometersDriven);
-
-        return carMapper.mapToDomainEntity(carRepository.save(carJpaEntity));
+        return getCar(carId).getTotalKilometersDriven();
     }
 
     @Override
     public Car updateCar(Car updatedCar) {
-        CarJpaEntity car = carRepository.findById(updatedCar.id()).orElseThrow(EntityNotFoundException::new);
-        car.setMake(updatedCar.make());
-        car.setModel(updatedCar.model());
-        car.setYear(updatedCar.year());
+        CarJpaEntity car = carRepository.findById(updatedCar.getId()).orElseThrow(EntityNotFoundException::new);
+        car.setMake(updatedCar.getMake());
+        car.setModel(updatedCar.getModel());
+        car.setYear(updatedCar.getYear());
         car.setRented(updatedCar.isRented());
 
         return carMapper.mapToDomainEntity(carRepository.save(car));

@@ -1,7 +1,5 @@
 package com.carrental.system.adapter.out.persistence.rental;
 
-import com.carrental.system.adapter.out.persistence.car.CarJpaEntity;
-import com.carrental.system.adapter.out.persistence.customer.CustomerJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,13 +16,11 @@ public class RentalJpaEntity {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "customer_id", nullable = false)
-    private CustomerJpaEntity customer;
+    @Column(name = "customer_id", nullable = false)
+    private Long customerId;
 
-    @ManyToOne
-    @JoinColumn(name = "car_id", nullable = false, unique = true)
-    private CarJpaEntity car;
+    @Column(name = "car_id", nullable = false, unique = true)
+    private Long carId;
 
     private Long kilometersDriven;
 }

@@ -7,6 +7,8 @@ import java.util.List;
 public interface RentalUseCase {
     List<Rental> findRentalsByCustomerId(Long id);
 
+    Long getTotalRentals();
+
     Rental startRental(Rental rental);
 
     void stopRental(Rental rental);

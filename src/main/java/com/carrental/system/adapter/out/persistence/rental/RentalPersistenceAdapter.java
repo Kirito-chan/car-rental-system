@@ -17,9 +17,15 @@ public class RentalPersistenceAdapter implements RentalPort {
 
     @Override
     public Rental createRental(Rental rental) {
+
         return rentalMapper.mapToDomainEntity(
                 rentalRepository.save(
                         rentalMapper.mapToJpaEntity(rental)));
+    }
+
+    @Override
+    public Long getTotalRentals() {
+        return rentalRepository.count();
     }
 
     @Override
@@ -29,6 +35,6 @@ public class RentalPersistenceAdapter implements RentalPort {
 
     @Override
     public void deleteRental(Rental rental) {
-        rentalRepository.deleteById(rental.id());
+        rentalRepository.deleteById(rental.getId());
     }
 }

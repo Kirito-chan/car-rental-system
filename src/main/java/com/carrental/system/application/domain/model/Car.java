@@ -1,4 +1,19 @@
 package com.carrental.system.application.domain.model;
 
-public record Car(Long id, String make, String model, Integer year, boolean isRented, Long totalKilometersDriven) {
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class Car {
+    
+    private Long id;
+    private String make;
+    private String model;
+    private Integer year;
+    private boolean isRented;
+    private Long totalKilometersDriven;
 }

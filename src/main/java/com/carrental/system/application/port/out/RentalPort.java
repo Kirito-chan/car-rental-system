@@ -7,6 +7,8 @@ import java.util.List;
 public interface RentalPort {
     List<Rental> findRentalsByCustomerId(Long id);
 
+    Long getTotalRentals();
+
     Rental createRental(Rental rental);
 
     void deleteRental(Rental rental);

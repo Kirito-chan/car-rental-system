@@ -1,4 +1,15 @@
 package com.carrental.system.application.domain.model;
 
-public record Customer(Long id, String name, String email) {
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+@AllArgsConstructor
+public class Customer {
+
+    private Long id;
+    private String name;
+    private String email;
 }

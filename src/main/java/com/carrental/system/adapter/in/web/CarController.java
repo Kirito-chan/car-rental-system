@@ -24,11 +24,6 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @GetMapping("/rented")
-    public List<Car> getAllRentedCars() {
-        return carService.getAllRentedCars();
-    }
-
     @GetMapping("/{id}/kilometers-driven")
     public Long getTotalKilometersDriven(@PathVariable Long id) {
         return carService.getTotalKilometersDriven(id);

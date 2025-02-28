@@ -28,4 +28,9 @@ public class RentalController {
     public List<Rental> findRentalsByCustomerId(Long customerId) {
         return rentalService.findRentalsByCustomerId(customerId);
     }
+
+    @GetMapping("/total")
+    public Long getTotalRentals() {
+        return rentalService.getTotalRentals();
+    }
 }

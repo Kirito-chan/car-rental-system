@@ -34,9 +34,9 @@ class CustomerPersistenceAdapter implements CustomerPort {
 
     @Override
     public Customer updateCustomer(Customer updatedCustomer) {
-        CustomerJpaEntity customer = customerRepository.findById(updatedCustomer.id()).orElseThrow(EntityNotFoundException::new);
-        customer.setName(updatedCustomer.name());
-        customer.setEmail(updatedCustomer.email());
+        CustomerJpaEntity customer = customerRepository.findById(updatedCustomer.getId()).orElseThrow(EntityNotFoundException::new);
+        customer.setName(updatedCustomer.getName());
+        customer.setEmail(updatedCustomer.getEmail());
 
         return customerMapper.mapToDomainEntity(customerRepository.save(customer));
     }

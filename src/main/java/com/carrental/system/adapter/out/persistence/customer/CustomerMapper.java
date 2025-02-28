@@ -12,8 +12,8 @@ public class CustomerMapper {
 
     public CustomerJpaEntity mapToJpaEntity(Customer customer) {
         return new CustomerJpaEntity(
-                customer.id() == null ? null : customer.id(),
-                customer.name(),
-                customer.email());
+                customer.getId() == null ? null : customer.getId(),
+                customer.getName(),
+                customer.getEmail());
     }
 }

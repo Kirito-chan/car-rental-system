@@ -9,10 +9,6 @@ public interface CarPort {
 
     List<Car> getAllCars();
 
-    List<Car> getAllRentedCars();
-
-    Car updateTotalKilometersDriven(Long carId, Long kilometersDriven);
-
     Long getTotalKilometersDriven(Long carId);
 
     Car createCar(Car car);

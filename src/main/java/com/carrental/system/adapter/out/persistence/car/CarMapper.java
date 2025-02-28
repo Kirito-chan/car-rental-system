@@ -19,11 +19,11 @@ public class CarMapper {
 
     public CarJpaEntity mapToJpaEntity(Car car) {
         return new CarJpaEntity(
-                car.id() == null ? null : car.id(),
-                car.make(),
-                car.model(),
-                car.year(),
+                car.getId() == null ? null : car.getId(),
+                car.getMake(),
+                car.getModel(),
+                car.getYear(),
                 car.isRented(),
-                car.totalKilometersDriven());
+                car.getTotalKilometersDriven());
     }
 }
