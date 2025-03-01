@@ -11,7 +11,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class CarPersistenceAdapter implements CarPort {
+class CarPersistenceAdapter implements CarPort {
 
     private final CarRepository carRepository;
     private final CarMapper carMapper;

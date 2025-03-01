@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerJpaEntity {
+class CustomerJpaEntity {
 
     @Id
     @GeneratedValue

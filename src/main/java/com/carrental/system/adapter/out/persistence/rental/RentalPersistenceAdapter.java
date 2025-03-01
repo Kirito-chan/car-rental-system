@@ -10,7 +10,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Component
-public class RentalPersistenceAdapter implements RentalPort {
+class RentalPersistenceAdapter implements RentalPort {
 
     private final RentalRepository rentalRepository;
     private final RentalMapper rentalMapper;

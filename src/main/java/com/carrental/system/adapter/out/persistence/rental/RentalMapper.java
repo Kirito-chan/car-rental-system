@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @AllArgsConstructor
-public class RentalMapper {
+class RentalMapper {
 
     Rental mapToDomainEntity(RentalJpaEntity rentalJpaEntity) {
         return new Rental(
