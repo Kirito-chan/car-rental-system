@@ -1,5 +1,6 @@
 package com.carrental.system.adapter.out.persistence.customer;
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Customer;
 import com.carrental.system.application.port.out.CustomerPort;
 import jakarta.persistence.EntityNotFoundException;
@@ -7,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.carrental.system.adapter.out.persistence.PageDefinitionUtil.toPageable;
 
 @RequiredArgsConstructor
 @Component
@@ -28,8 +31,11 @@ class CustomerPersistenceAdapter implements CustomerPort {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return customerRepository.findAll().stream().map(customerMapper::mapToDomainEntity).toList();
+    public List<Customer> getAllCustomers(PageDefinition pageDefinition) {
+        return customerRepository.findAll(toPageable(pageDefinition))
+                .stream()
+                .map(customerMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override

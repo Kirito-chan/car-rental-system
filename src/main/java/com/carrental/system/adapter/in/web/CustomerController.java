@@ -1,5 +1,6 @@
 package com.carrental.system.adapter.in.web;
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Customer;
 import com.carrental.system.application.domain.service.CustomerService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,11 @@ class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getAllCustomers() {
-        return customerService.getAllCustomers();
+    public List<Customer> getAllCustomers(@RequestParam(defaultValue = "1", required = false) int pageNumber,
+                                          @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize,
+                                          @RequestParam(defaultValue = "make", required = false) String propertyName) {
+        var pageDefinition = new PageDefinition(pageNumber, pageSize, propertyName);
+        return customerService.getAllCustomers(pageDefinition);
     }
 
     @GetMapping("/{id}")

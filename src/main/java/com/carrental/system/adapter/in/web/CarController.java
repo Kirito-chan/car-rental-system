@@ -1,5 +1,6 @@
 package com.carrental.system.adapter.in.web;
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Car;
 import com.carrental.system.application.domain.service.CarService;
 import lombok.AllArgsConstructor;
@@ -20,8 +21,11 @@ class CarController {
     }
 
     @GetMapping
-    public List<Car> getAllCars() {
-        return carService.getAllCars();
+    public List<Car> getAllCars(@RequestParam(defaultValue = "1", required = false) int pageNumber,
+                                @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize,
+                                @RequestParam(defaultValue = "make", required = false) String propertyName) {
+        var pageDefinition = new PageDefinition(pageNumber, pageSize, propertyName);
+        return carService.getAllCars(pageDefinition);
     }
 
     @GetMapping("/{id}/kilometers-driven")

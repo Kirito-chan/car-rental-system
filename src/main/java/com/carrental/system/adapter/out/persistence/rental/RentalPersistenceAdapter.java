@@ -30,7 +30,10 @@ class RentalPersistenceAdapter implements RentalPort {
 
     @Override
     public List<Rental> findRentalsByCustomerId(Long customerId) {
-        return rentalRepository.findByCustomerId(customerId).stream().map(rentalMapper::mapToDomainEntity).toList();
+        return rentalRepository.findByCustomerId(customerId)
+                .stream()
+                .map(rentalMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override

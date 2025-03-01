@@ -1,5 +1,6 @@
 package com.carrental.system.application.domain.service;
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Customer;
 import com.carrental.system.application.port.in.CustomerUseCase;
 import com.carrental.system.application.port.out.CustomerPort;
@@ -22,8 +23,8 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
-    public List<Customer> getAllCustomers() {
-        return customerPort.getAllCustomers();
+    public List<Customer> getAllCustomers(PageDefinition pageDefinition) {
+        return customerPort.getAllCustomers(pageDefinition);
     }
 
     @Override

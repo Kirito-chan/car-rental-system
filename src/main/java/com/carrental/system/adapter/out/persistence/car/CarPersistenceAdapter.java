@@ -1,6 +1,7 @@
 package com.carrental.system.adapter.out.persistence.car;
 
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Car;
 import com.carrental.system.application.port.out.CarPort;
 import jakarta.persistence.EntityNotFoundException;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+
+import static com.carrental.system.adapter.out.persistence.PageDefinitionUtil.toPageable;
 
 @RequiredArgsConstructor
 @Component
@@ -29,8 +32,11 @@ class CarPersistenceAdapter implements CarPort {
     }
 
     @Override
-    public List<Car> getAllCars() {
-        return carRepository.findAll().stream().map(carMapper::mapToDomainEntity).toList();
+    public List<Car> getAllCars(PageDefinition pageDefinition) {
+        return carRepository.findAll(toPageable(pageDefinition))
+                .stream()
+                .map(carMapper::mapToDomainEntity)
+                .toList();
     }
 
     @Override

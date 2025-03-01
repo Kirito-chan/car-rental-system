@@ -1,5 +1,6 @@
 package com.carrental.system.application.domain.service;
 
+import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Car;
 import com.carrental.system.application.port.in.CarUseCase;
 import com.carrental.system.application.port.out.CarPort;
@@ -21,8 +22,8 @@ public class CarService implements CarUseCase {
     }
 
     @Override
-    public List<Car> getAllCars() {
-        return carPort.getAllCars();
+    public List<Car> getAllCars(PageDefinition pageDefinition) {
+        return carPort.getAllCars(pageDefinition);
     }
 
     @Override
