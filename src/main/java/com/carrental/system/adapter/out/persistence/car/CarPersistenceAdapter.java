@@ -52,6 +52,7 @@ class CarPersistenceAdapter implements CarPort {
         car.setTotalSeats(updatedCar.getTotalSeats());
         car.setAutomaticTransmission(updatedCar.isAutomaticTransmission());
         car.setRented(updatedCar.isRented());
+        car.setTotalKilometersDriven(updatedCar.getTotalKilometersDriven());
 
         return carMapper.mapToDomainEntity(carRepository.save(car));
     }

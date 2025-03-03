@@ -11,5 +11,5 @@ public interface RentalUseCase {
 
     Rental startRental(Rental rental);
 
-    void stopRental(Rental rental);
+    Long stopRental(Long carId, Long kilometersDriven);
 }

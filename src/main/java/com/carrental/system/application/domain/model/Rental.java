@@ -12,5 +12,4 @@ public class Rental {
     private Long id;
     private Long customerId;
     private Long carId;
-    private Long kilometersDriven;
 }

@@ -6,5 +6,5 @@ CREATE TABLE car
     total_seats               INTEGER      NOT NULL,
     is_automatic_transmission BOOLEAN      NOT NULL,
     is_rented                 BOOLEAN      NOT NULL,
-    total_kilometers_driven   BIGINT       NOT NULL
+    total_kilometers_driven   INTEGER      NOT NULL
 );

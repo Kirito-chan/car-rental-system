@@ -21,4 +21,16 @@
                 relativeToChangelogFile="true"
                 path="1.0.0/1.0.0-customers-create.sql"/>
     </changeSet>
+    <changeSet id="1.0.0-customers-insert.sql" author="Frantisek Kochjar">
+        <sqlFile
+                endDelimiter="$$"
+                relativeToChangelogFile="true"
+                path="1.0.0/1.0.0-customers-insert.sql"/>
+    </changeSet>
+    <changeSet id="1.0.0-rental-create.sql" author="Frantisek Kochjar">
+        <sqlFile
+                endDelimiter="$$"
+                relativeToChangelogFile="true"
+                path="1.0.0/1.0.0-rental-create.sql"/>
+    </changeSet>
 </databaseChangeLog>

@@ -19,9 +19,9 @@ class RentalController {
         return rentalService.startRental(rental);
     }
 
-    @DeleteMapping
-    public void stopRental(@RequestBody Rental rental) {
-        rentalService.stopRental(rental);
+    @DeleteMapping("/{carId}")
+    public Long stopRental(@PathVariable Long carId, @RequestParam Long kilometersDriven) {
+        return rentalService.stopRental(carId, kilometersDriven);
     }
 
     @GetMapping

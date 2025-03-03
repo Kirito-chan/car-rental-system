@@ -12,15 +12,13 @@ class RentalMapper {
         return new Rental(
                 rentalJpaEntity.getId(),
                 rentalJpaEntity.getCustomerId(),
-                rentalJpaEntity.getCarId(),
-                rentalJpaEntity.getKilometersDriven());
+                rentalJpaEntity.getCarId());
     }
 
     RentalJpaEntity mapToJpaEntity(Rental rental) {
         return new RentalJpaEntity(
                 rental.getId() == null ? null : rental.getId(),
                 rental.getCustomerId(),
-                rental.getCarId(),
-                rental.getKilometersDriven());
+                rental.getCarId());
     }
 }

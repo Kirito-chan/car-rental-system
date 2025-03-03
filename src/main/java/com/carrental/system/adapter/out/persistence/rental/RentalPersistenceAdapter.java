@@ -37,7 +37,7 @@ class RentalPersistenceAdapter implements RentalPort {
     }
 
     @Override
-    public void deleteRental(Rental rental) {
-        rentalRepository.deleteById(rental.getId());
+    public void deleteRentalByCarId(Long carId) {
+        rentalRepository.deleteByCarId(carId);
     }
 }

@@ -6,4 +6,6 @@ import java.util.List;
 
 interface RentalRepository extends JpaRepository<RentalJpaEntity, Long> {
     List<RentalJpaEntity> findByCustomerId(Long id);
+
+    void deleteByCarId(Long id);
 }

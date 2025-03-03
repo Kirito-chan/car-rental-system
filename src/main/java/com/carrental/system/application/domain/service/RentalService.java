@@ -33,13 +33,14 @@ public class RentalService implements RentalUseCase {
     }
 
     @Override
-    public void stopRental(Rental rental) {
-        var car = carPort.getCar(rental.getCarId());
+    public Long stopRental(Long carId, Long kilometersDriven) {
+        var car = carPort.getCar(carId);
         car.setRented(false);
-        car.setTotalKilometersDriven(rental.getKilometersDriven());
+        car.setTotalKilometersDriven(car.getTotalKilometersDriven() + kilometersDriven);
         carPort.updateCar(car);
 
-        rentalPort.deleteRental(rental);
+        rentalPort.deleteRentalByCarId(car.getId());
+        return car.getTotalKilometersDriven();
     }
 
     @Override

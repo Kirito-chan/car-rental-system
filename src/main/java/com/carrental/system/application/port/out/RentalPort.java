@@ -11,5 +11,5 @@ public interface RentalPort {
 
     Rental createRental(Rental rental);
 
-    void deleteRental(Rental rental);
+    void deleteRentalByCarId(Long carId);
 }

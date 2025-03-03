@@ -13,7 +13,8 @@ import lombok.NoArgsConstructor;
 class RentalJpaEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "rental_id_seq")
+    @SequenceGenerator(name = "rental_id_seq", sequenceName = "rental_id_seq", allocationSize = 1)
     private Long id;
 
     @Column(name = "customer_id", nullable = false)
@@ -21,6 +22,4 @@ class RentalJpaEntity {
 
     @Column(name = "car_id", nullable = false, unique = true)
     private Long carId;
-
-    private Long kilometersDriven;
 }
