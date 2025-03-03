@@ -1,0 +1,24 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+
+    <changeSet id="1.0.0-cars-create.sql" author="Frantisek Kochjar">
+        <sqlFile
+                endDelimiter="$$"
+                relativeToChangelogFile="true"
+                path="1.0.0/1.0.0-cars-create.sql"/>
+    </changeSet>
+    <changeSet id="1.0.0-cars-insert.sql" author="Frantisek Kochjar">
+        <sqlFile
+                endDelimiter="$$"
+                relativeToChangelogFile="true"
+                path="1.0.0/1.0.0-cars-insert.sql"/>
+    </changeSet>
+    <changeSet id="1.0.0-customers-create.sql" author="Frantisek Kochjar">
+        <sqlFile
+                endDelimiter="$$"
+                relativeToChangelogFile="true"
+                path="1.0.0/1.0.0-customers-create.sql"/>
+    </changeSet>
+</databaseChangeLog>

@@ -49,7 +49,8 @@ class CarPersistenceAdapter implements CarPort {
         CarJpaEntity car = carRepository.findById(updatedCar.getId()).orElseThrow(EntityNotFoundException::new);
         car.setMake(updatedCar.getMake());
         car.setModel(updatedCar.getModel());
-        car.setYear(updatedCar.getYear());
+        car.setTotalSeats(updatedCar.getTotalSeats());
+        car.setAutomaticTransmission(updatedCar.isAutomaticTransmission());
         car.setRented(updatedCar.isRented());
 
         return carMapper.mapToDomainEntity(carRepository.save(car));

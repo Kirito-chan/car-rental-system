@@ -9,11 +9,12 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 public class Car {
-    
+
     private Long id;
     private String make;
     private String model;
-    private Integer year;
+    private Integer totalSeats;
+    private boolean isAutomaticTransmission;
     private boolean isRented;
     private Long totalKilometersDriven;
 }

@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-class CarJpaEntity {
+public class CarJpaEntity {
 
     @Id
     @GeneratedValue
@@ -21,7 +21,8 @@ class CarJpaEntity {
 
     private String make;
     private String model;
-    private Integer year;
+    private Integer totalSeats;
+    private boolean isAutomaticTransmission;
     private boolean isRented;
     private Long totalKilometersDriven;
 }

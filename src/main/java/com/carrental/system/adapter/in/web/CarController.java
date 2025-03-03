@@ -22,9 +22,8 @@ class CarController {
 
     @GetMapping
     public List<Car> getAllCars(@RequestParam(defaultValue = "1", required = false) int pageNumber,
-                                @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize,
-                                @RequestParam(defaultValue = "make", required = false) String propertyName) {
-        var pageDefinition = new PageDefinition(pageNumber, pageSize, propertyName);
+                                @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize) {
+        var pageDefinition = new PageDefinition(pageNumber, pageSize);
         return carService.getAllCars(pageDefinition);
     }
 
