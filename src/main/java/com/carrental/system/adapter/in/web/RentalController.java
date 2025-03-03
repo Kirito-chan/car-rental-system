@@ -1,7 +1,7 @@
 package com.carrental.system.adapter.in.web;
 
 import com.carrental.system.application.domain.model.Rental;
-import com.carrental.system.application.domain.service.RentalService;
+import com.carrental.system.application.port.in.RentalUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,25 +12,25 @@ import java.util.List;
 @AllArgsConstructor
 class RentalController {
 
-    private final RentalService rentalService;
+    private final RentalUseCase rentalUseCase;
 
     @PostMapping
     public Rental startRental(@RequestBody Rental rental) {
-        return rentalService.startRental(rental);
+        return rentalUseCase.startRental(rental);
     }
 
     @DeleteMapping("/{carId}")
     public Long stopRental(@PathVariable Long carId, @RequestParam Long kilometersDriven) {
-        return rentalService.stopRental(carId, kilometersDriven);
+        return rentalUseCase.stopRental(carId, kilometersDriven);
     }
 
     @GetMapping
     public List<Rental> findRentalsByCustomerId(Long customerId) {
-        return rentalService.findRentalsByCustomerId(customerId);
+        return rentalUseCase.findRentalsByCustomerId(customerId);
     }
 
     @GetMapping("/total")
     public Long getTotalRentals() {
-        return rentalService.getTotalRentals();
+        return rentalUseCase.getTotalRentals();
     }
 }
