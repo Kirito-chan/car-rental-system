@@ -10,6 +10,6 @@ import lombok.Setter;
 public class Rental {
 
     private Long id;
-    private Long customerId;
-    private Long carId;
+    private Customer customer;
+    private Car car;
 }

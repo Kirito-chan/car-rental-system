@@ -1,5 +1,6 @@
 package com.carrental.system.adapter.in.web;
 
+import com.carrental.system.adapter.in.web.model.StartRentalRequest;
 import com.carrental.system.application.domain.model.Rental;
 import com.carrental.system.application.port.in.RentalUseCase;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ class RentalController {
     private final RentalUseCase rentalUseCase;
 
     @PostMapping
-    public Rental startRental(@RequestBody Rental rental) {
+    public Rental startRental(@RequestBody StartRentalRequest rental) {
         return rentalUseCase.startRental(rental);
     }
 

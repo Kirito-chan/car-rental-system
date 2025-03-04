@@ -1,8 +1,11 @@
 package com.carrental.system.adapter.in.web;
 
+import com.carrental.system.adapter.in.web.model.CustomerRentalInfoResponse;
 import com.carrental.system.adapter.out.persistence.PageDefinition;
+import com.carrental.system.application.domain.model.Car;
 import com.carrental.system.application.domain.model.Customer;
 import com.carrental.system.application.port.in.CustomerUseCase;
+import com.carrental.system.application.port.in.RentalUseCase;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,7 @@ import java.util.List;
 class CustomerController {
 
     private final CustomerUseCase customerUseCase;
+    private final RentalUseCase rentalUseCase;
 
     @PostMapping
     public Customer createCustomer(@RequestBody Customer customer) {
@@ -21,10 +25,14 @@ class CustomerController {
     }
 
     @GetMapping
-    public List<Customer> getAllCustomers(@RequestParam(defaultValue = "1", required = false) int pageNumber,
-                                          @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize) {
+    public List<CustomerRentalInfoResponse> getAllCustomers(@RequestParam(defaultValue = "1", required = false) int pageNumber,
+                                                            @RequestParam(defaultValue = "" + Integer.MAX_VALUE, required = false) int pageSize) {
         var pageDefinition = new PageDefinition(pageNumber, pageSize);
-        return customerUseCase.getAllCustomers(pageDefinition);
+        var customers = customerUseCase.getAllCustomers(pageDefinition);
+        return customers.stream().map(customer -> {
+            List<Car> rentedCars = rentalUseCase.findRentedCarsByCustomerId(customer.getId());
+            return new CustomerRentalInfoResponse(customer, !rentedCars.isEmpty() ? rentedCars : null);
+        }).toList();
     }
 
     @GetMapping("/{id}")

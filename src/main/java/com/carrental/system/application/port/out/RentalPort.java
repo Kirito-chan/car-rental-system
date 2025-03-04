@@ -5,7 +5,9 @@ import com.carrental.system.application.domain.model.Rental;
 import java.util.List;
 
 public interface RentalPort {
-    List<Rental> findRentalsByCustomerId(Long id);
+    List<Rental> findRentalsByCustomerId(Long customerId);
+
+    Rental findRentalByCarId(Long carId);
 
     Long getTotalRentals();
 

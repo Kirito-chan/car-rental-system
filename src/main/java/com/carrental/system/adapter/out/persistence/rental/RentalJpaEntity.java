@@ -1,5 +1,7 @@
 package com.carrental.system.adapter.out.persistence.rental;
 
+import com.carrental.system.adapter.out.persistence.car.CarJpaEntity;
+import com.carrental.system.adapter.out.persistence.customer.CustomerJpaEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,9 +19,13 @@ class RentalJpaEntity {
     @SequenceGenerator(name = "rental_id_seq", sequenceName = "rental_id_seq", allocationSize = 1)
     private Long id;
 
-    @Column(name = "customer_id", nullable = false)
-    private Long customerId;
+    @ManyToOne
+    @JoinColumn(name = "customer_id", nullable = false, foreignKey = @ForeignKey(name = "fk_rental_customer"))
+    private CustomerJpaEntity customer;
 
-    @Column(name = "car_id", nullable = false, unique = true)
-    private Long carId;
+    @OneToOne
+    @JoinColumn(name = "car_id", nullable = false, unique = true, foreignKey = @ForeignKey(name = "fk_rental_car"))
+    private CarJpaEntity car;
+
+
 }
