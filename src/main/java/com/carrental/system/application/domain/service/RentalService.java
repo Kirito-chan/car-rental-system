@@ -1,10 +1,12 @@
 package com.carrental.system.application.domain.service;
 
-import com.carrental.system.adapter.in.web.model.StartRentalRequest;
 import com.carrental.system.application.domain.model.Car;
-import com.carrental.system.application.domain.model.Customer;
 import com.carrental.system.application.domain.model.Rental;
-import com.carrental.system.application.port.in.RentalUseCase;
+import com.carrental.system.application.port.in.GetActiveRentalsUseCase;
+import com.carrental.system.application.port.in.GetCustomersRentedCarsUseCase;
+import com.carrental.system.application.port.in.StartRentalUseCase;
+import com.carrental.system.application.port.in.StopRentalUseCase;
+import com.carrental.system.application.port.in.command.StartRentalCommand;
 import com.carrental.system.application.port.out.CarPort;
 import com.carrental.system.application.port.out.CustomerPort;
 import com.carrental.system.application.port.out.RentalPort;
@@ -18,26 +20,15 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class RentalService implements RentalUseCase {
+public class RentalService implements StartRentalUseCase, StopRentalUseCase, GetActiveRentalsUseCase, GetCustomersRentedCarsUseCase {
 
     private final RentalPort rentalPort;
     private final CustomerPort customerPort;
     private final CarPort carPort;
 
     @Override
-    public List<Rental> findRentalsByCustomerId(Long customerId) {
-        return rentalPort.findRentalsByCustomerId(customerId);
-    }
-
-    @Override
-    public Customer findCustomerByCarId(Long carId) {
-        var rental = rentalPort.findRentalByCarId(carId);
-        return customerPort.getCustomer(rental.getCustomer().getId());
-    }
-
-    @Override
-    public List<Car> findRentedCarsByCustomerId(Long customerId) {
-        var rentals = this.findRentalsByCustomerId(customerId);
+    public List<Car> getRentedCarsByCustomerId(Long customerId) {
+        var rentals = rentalPort.findRentalsByCustomerId(customerId);
         if (rentals.isEmpty()) {
             return new ArrayList<>();
         }
@@ -45,35 +36,31 @@ public class RentalService implements RentalUseCase {
     }
 
     @Override
-    public Rental startRental(StartRentalRequest startRentalRequest) {
-        var rental = mapStartRentalRequestToDomain(startRentalRequest);
-        var car = rental.getCar();
+    public Rental startRental(StartRentalCommand startRentalCommand) {
+        var customer = customerPort.getCustomer(startRentalCommand.customerId());
+
+        var car = carPort.getCar(startRentalCommand.carId());
         car.setRented(true);
-        carPort.updateCar(car);
-        rental.setCar(car);
-        
+        carPort.updateCar(car, true);
+
+        var rental = new Rental(null, customer, car);
+
         return rentalPort.createRental(rental);
     }
 
     @Override
-    public Long stopRental(Long carId, Long kilometersDriven) {
+    public long stopRental(Long carId, int kilometersDriven) {
         var car = carPort.getCar(carId);
         car.setRented(false);
         car.setTotalKilometersDriven(car.getTotalKilometersDriven() + kilometersDriven);
-        carPort.updateCar(car);
+        carPort.updateCar(car, true);
 
         rentalPort.deleteRentalByCarId(car.getId());
         return car.getTotalKilometersDriven();
     }
 
     @Override
-    public Long getTotalRentals() {
+    public long getTotalRentedCars() {
         return rentalPort.getTotalRentals();
-    }
-
-    private Rental mapStartRentalRequestToDomain(StartRentalRequest rental) {
-        var customer = customerPort.getCustomer(rental.customerId());
-        var car = carPort.getCar(rental.carId());
-        return new Rental(null, customer, car);
     }
 }

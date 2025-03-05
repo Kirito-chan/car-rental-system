@@ -1,9 +1,13 @@
 package com.carrental.system.application.domain.service;
 
+import com.carrental.system.adapter.in.web.model.CarRentalInfoResponse;
 import com.carrental.system.adapter.out.persistence.PageDefinition;
 import com.carrental.system.application.domain.model.Car;
-import com.carrental.system.application.port.in.CarUseCase;
+import com.carrental.system.application.domain.model.Customer;
+import com.carrental.system.application.port.in.CarCrudUseCases.*;
+import com.carrental.system.application.port.in.GetTotalDistanceRentedForCarUseCase;
 import com.carrental.system.application.port.out.CarPort;
+import com.carrental.system.application.port.out.RentalPort;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,8 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CarService implements CarUseCase {
+public class CarService implements GetTotalDistanceRentedForCarUseCase, CreateCarUseCase, GetCarUseCase, GetAllCarsUseCase, UpdateCarUseCase, DeleteCarUseCase {
     private final CarPort carPort;
+    private final RentalPort rentalPort;
 
     @Override
     public Car getCar(Long carId) {
@@ -22,12 +27,15 @@ public class CarService implements CarUseCase {
     }
 
     @Override
-    public List<Car> getAllCars(PageDefinition pageDefinition) {
-        return carPort.getAllCars(pageDefinition);
+    public List<CarRentalInfoResponse> getAllCars(PageDefinition pageDefinition) {
+        return carPort.getAllCars(pageDefinition).stream().map(car -> {
+            Customer customer = car.isRented() ? rentalPort.findRentalByCarId(car.getId()).getCustomer() : null;
+            return new CarRentalInfoResponse(car, customer != null ? customer.getName() : null);
+        }).toList();
     }
 
     @Override
-    public Long getTotalKilometersDriven(Long carId) {
+    public long getTotalKilometersRented(Long carId) {
         return carPort.getTotalKilometersDriven(carId);
     }
 
@@ -38,7 +46,7 @@ public class CarService implements CarUseCase {
 
     @Override
     public Car updateCar(Car car) {
-        return carPort.updateCar(car);
+        return carPort.updateCar(car, false);
     }
 
     @Override

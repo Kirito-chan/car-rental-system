@@ -10,11 +10,11 @@ public interface CarPort {
 
     List<Car> getAllCars(PageDefinition pageDefinition);
 
-    Long getTotalKilometersDriven(Long carId);
+    long getTotalKilometersDriven(Long carId);
 
     Car createCar(Car car);
 
-    Car updateCar(Car car);
+    Car updateCar(Car car, boolean updateRented);
 
     void deleteCar(Long carId);
 }

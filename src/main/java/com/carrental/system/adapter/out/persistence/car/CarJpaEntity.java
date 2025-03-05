@@ -19,8 +19,8 @@ public class CarJpaEntity {
 
     private String make;
     private String model;
-    private Integer totalSeats;
+    private int totalSeats;
+    private int totalKilometersDriven;
     private boolean isAutomaticTransmission;
     private boolean isRented;
-    private Long totalKilometersDriven;
 }

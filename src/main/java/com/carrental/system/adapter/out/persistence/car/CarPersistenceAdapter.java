@@ -40,19 +40,21 @@ class CarPersistenceAdapter implements CarPort {
     }
 
     @Override
-    public Long getTotalKilometersDriven(Long carId) {
+    public long getTotalKilometersDriven(Long carId) {
         return getCar(carId).getTotalKilometersDriven();
     }
 
     @Override
-    public Car updateCar(Car updatedCar) {
+    public Car updateCar(Car updatedCar, boolean updateRented) {
         CarJpaEntity car = carRepository.findById(updatedCar.getId()).orElseThrow(EntityNotFoundException::new);
         car.setMake(updatedCar.getMake());
         car.setModel(updatedCar.getModel());
         car.setTotalSeats(updatedCar.getTotalSeats());
         car.setAutomaticTransmission(updatedCar.isAutomaticTransmission());
-        car.setRented(updatedCar.isRented());
         car.setTotalKilometersDriven(updatedCar.getTotalKilometersDriven());
+        if (updateRented) {
+            car.setRented(updatedCar.isRented());
+        }
 
         return carMapper.mapToDomainEntity(carRepository.save(car));
     }

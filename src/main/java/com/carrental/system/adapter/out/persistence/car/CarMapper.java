@@ -13,9 +13,10 @@ class CarMapper {
                 carJpaEntity.getMake(),
                 carJpaEntity.getModel(),
                 carJpaEntity.getTotalSeats(),
+                carJpaEntity.getTotalKilometersDriven(),
                 carJpaEntity.isAutomaticTransmission(),
-                carJpaEntity.isRented(),
-                carJpaEntity.getTotalKilometersDriven());
+                carJpaEntity.isRented()
+        );
     }
 
     CarJpaEntity mapToJpaEntity(Car car) {
@@ -24,8 +25,9 @@ class CarMapper {
                 car.getMake(),
                 car.getModel(),
                 car.getTotalSeats(),
+                car.getTotalKilometersDriven(),
                 car.isAutomaticTransmission(),
-                car.isRented(),
-                car.getTotalKilometersDriven());
+                car.isRented()
+        );
     }
 }

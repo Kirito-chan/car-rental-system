@@ -1,8 +1,11 @@
 package com.carrental.system.application.domain.service;
 
+import com.carrental.system.adapter.in.web.model.CustomerRentalInfoResponse;
 import com.carrental.system.adapter.out.persistence.PageDefinition;
+import com.carrental.system.application.domain.model.Car;
 import com.carrental.system.application.domain.model.Customer;
-import com.carrental.system.application.port.in.CustomerUseCase;
+import com.carrental.system.application.port.in.CustomerCrudUseCases.*;
+import com.carrental.system.application.port.in.GetCustomersRentedCarsUseCase;
 import com.carrental.system.application.port.out.CustomerPort;
 import com.carrental.system.application.port.out.RentalPort;
 import com.carrental.system.common.exception.CustomerCurrentlyRentingException;
@@ -15,10 +18,11 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CustomerService implements CustomerUseCase {
+public class CustomerService implements CreateCustomerUseCase, GetAllCustomersUseCase, GetCustomerUseCase, UpdateCustomerUseCase, DeleteCustomerUseCase {
 
     private final CustomerPort customerPort;
     private final RentalPort rentalPort;
+    private final GetCustomersRentedCarsUseCase getCustomersRentedCarsUseCase;
 
     @Override
     public Customer getCustomer(Long customerId) {
@@ -26,8 +30,13 @@ public class CustomerService implements CustomerUseCase {
     }
 
     @Override
-    public List<Customer> getAllCustomers(PageDefinition pageDefinition) {
-        return customerPort.getAllCustomers(pageDefinition);
+    public List<CustomerRentalInfoResponse> getAllCustomers(PageDefinition pageDefinition) {
+        return customerPort.getAllCustomers(pageDefinition)
+                .stream()
+                .map(customer -> {
+                    List<Car> rentedCars = getCustomersRentedCarsUseCase.getRentedCarsByCustomerId(customer.getId());
+                    return new CustomerRentalInfoResponse(customer, !rentedCars.isEmpty() ? rentedCars : null);
+                }).toList();
     }
 
     @Override

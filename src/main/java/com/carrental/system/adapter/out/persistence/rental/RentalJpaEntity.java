@@ -24,7 +24,7 @@ class RentalJpaEntity {
     private CustomerJpaEntity customer;
 
     @OneToOne
-    @JoinColumn(name = "car_id", nullable = false, unique = true, foreignKey = @ForeignKey(name = "fk_rental_car"))
+    @JoinColumn(name = "car_id", nullable = false, foreignKey = @ForeignKey(name = "fk_rental_car"))
     private CarJpaEntity car;
 
 

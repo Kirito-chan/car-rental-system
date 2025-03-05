@@ -18,7 +18,8 @@ class RentalMapper {
         return new Rental(
                 rentalJpaEntity.getId(),
                 new Customer(customer.getId(), customer.getName(), customer.getEmail()),
-                new Car(car.getId(), car.getMake(), car.getModel(), car.getTotalSeats(), car.isAutomaticTransmission(), car.isRented(), car.getTotalKilometersDriven()));
+                new Car(car.getId(), car.getMake(), car.getModel(), car.getTotalSeats(), car.getTotalKilometersDriven(),
+                        car.isAutomaticTransmission(), car.isRented()));
     }
 
     RentalJpaEntity mapToJpaEntity(Rental rental) {
@@ -27,6 +28,7 @@ class RentalMapper {
         return new RentalJpaEntity(
                 rental.getId() == null ? null : rental.getId(),
                 new CustomerJpaEntity(customer.getId(), customer.getName(), customer.getEmail()),
-                new CarJpaEntity(car.getId(), car.getMake(), car.getModel(), car.getTotalSeats(), car.isAutomaticTransmission(), car.isRented(), car.getTotalKilometersDriven()));
+                new CarJpaEntity(car.getId(), car.getMake(), car.getModel(), car.getTotalSeats(),
+                                 car.getTotalKilometersDriven(), car.isAutomaticTransmission(), car.isRented()));
     }
 }

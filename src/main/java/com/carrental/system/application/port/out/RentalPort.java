@@ -9,7 +9,7 @@ public interface RentalPort {
 
     Rental findRentalByCarId(Long carId);
 
-    Long getTotalRentals();
+    long getTotalRentals();
 
     Rental createRental(Rental rental);
 

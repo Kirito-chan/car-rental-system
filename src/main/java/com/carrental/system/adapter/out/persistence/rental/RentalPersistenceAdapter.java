@@ -25,13 +25,14 @@ class RentalPersistenceAdapter implements RentalPort {
     }
 
     @Override
-    public Long getTotalRentals() {
+    public long getTotalRentals() {
         return rentalRepository.count();
     }
 
     @Override
     public Rental findRentalByCarId(Long carId) {
-        return rentalMapper.mapToDomainEntity(rentalRepository.findByCarId(carId).orElseThrow(EntityNotFoundException::new));
+        return rentalMapper.mapToDomainEntity(
+                rentalRepository.findByCarId(carId).orElseThrow(EntityNotFoundException::new));
     }
 
     @Override
