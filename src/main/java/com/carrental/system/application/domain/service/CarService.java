@@ -32,8 +32,6 @@ public class CarService implements CreateCarUseCase, GetCarUseCase, GetAllCarsUs
         return carPort.getAllCars(pageDefinition)
                 .stream()
                 .map(car -> {
-                    System.out.println(car.getId());
-                    System.out.println(car.isRented());
                     Customer customer = car.isRented() ? rentalPort.findRentalByCarId(car.getId()).getCustomer() : null;
                     return new CarRentalInfoResponse(car, customer != null ? customer.getName() : null);
                 }).toList();
