@@ -8,6 +8,7 @@ import com.carrental.system.application.port.in.CarCrudUseCases.*;
 import com.carrental.system.application.port.in.GetTotalDistanceRentedForCarUseCase;
 import com.carrental.system.application.port.out.CarPort;
 import com.carrental.system.application.port.out.RentalPort;
+import com.carrental.system.common.exception.CarCurrentlyRentedException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Transactional
 @Service
-public class CarService implements GetTotalDistanceRentedForCarUseCase, CreateCarUseCase, GetCarUseCase, GetAllCarsUseCase, UpdateCarUseCase, DeleteCarUseCase {
+public class CarService implements CreateCarUseCase, GetCarUseCase, GetAllCarsUseCase, UpdateCarUseCase, DeleteCarUseCase, GetTotalDistanceRentedForCarUseCase {
     private final CarPort carPort;
     private final RentalPort rentalPort;
 
@@ -28,15 +29,14 @@ public class CarService implements GetTotalDistanceRentedForCarUseCase, CreateCa
 
     @Override
     public List<CarRentalInfoResponse> getAllCars(PageDefinition pageDefinition) {
-        return carPort.getAllCars(pageDefinition).stream().map(car -> {
-            Customer customer = car.isRented() ? rentalPort.findRentalByCarId(car.getId()).getCustomer() : null;
-            return new CarRentalInfoResponse(car, customer != null ? customer.getName() : null);
-        }).toList();
-    }
-
-    @Override
-    public long getTotalKilometersRented(Long carId) {
-        return carPort.getTotalKilometersDriven(carId);
+        return carPort.getAllCars(pageDefinition)
+                .stream()
+                .map(car -> {
+                    System.out.println(car.getId());
+                    System.out.println(car.isRented());
+                    Customer customer = car.isRented() ? rentalPort.findRentalByCarId(car.getId()).getCustomer() : null;
+                    return new CarRentalInfoResponse(car, customer != null ? customer.getName() : null);
+                }).toList();
     }
 
     @Override
@@ -51,6 +51,16 @@ public class CarService implements GetTotalDistanceRentedForCarUseCase, CreateCa
 
     @Override
     public void deleteCar(Long carId) {
+        var isRenting = rentalPort.findRentalByCarId(carId) != null;
+
+        if (isRenting) {
+            throw new CarCurrentlyRentedException(carId);
+        }
         carPort.deleteCar(carId);
+    }
+
+    @Override
+    public long getTotalKilometersRented(Long carId) {
+        return carPort.getTotalKilometersDriven(carId);
     }
 }

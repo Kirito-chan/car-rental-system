@@ -15,8 +15,8 @@ public class GlobalExceptionHandler {
 
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
-    @ExceptionHandler(CustomerCurrentlyRentingException.class)
-    public ResponseEntity<Map<String, Object>> handleCustomerCurrentlyRentingException(CustomerCurrentlyRentingException ex) {
+    @ExceptionHandler({CustomerCurrentlyRentingException.class, CarCurrentlyRentedException.class})
+    public ResponseEntity<Map<String, Object>> handleCustomerCurrentlyRentingException(RuntimeException ex) {
         logger.error("Error: {}", ex.getMessage());
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(

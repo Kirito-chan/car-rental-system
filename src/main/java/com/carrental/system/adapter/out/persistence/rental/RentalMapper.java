@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 class RentalMapper {
 
     Rental mapToDomainEntity(RentalJpaEntity rentalJpaEntity) {
+        if (rentalJpaEntity == null) {
+            return null;
+        }
         var customer = rentalJpaEntity.getCustomer();
         var car = rentalJpaEntity.getCar();
         return new Rental(

@@ -3,7 +3,6 @@ package com.carrental.system.adapter.out.persistence.rental;
 
 import com.carrental.system.application.domain.model.Rental;
 import com.carrental.system.application.port.out.RentalPort;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -31,8 +30,7 @@ class RentalPersistenceAdapter implements RentalPort {
 
     @Override
     public Rental findRentalByCarId(Long carId) {
-        return rentalMapper.mapToDomainEntity(
-                rentalRepository.findByCarId(carId).orElseThrow(EntityNotFoundException::new));
+        return rentalMapper.mapToDomainEntity(rentalRepository.findByCarId(carId).orElse(null));
     }
 
     @Override
